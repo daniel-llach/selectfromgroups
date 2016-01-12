@@ -1,0 +1,31 @@
+<link rel="import" href="./../bower_components/polymer/polymer.html">
+
+<dom-module id="selectfrom-groups">
+
+  <!-- Defines element markup -->
+  <template>
+    <style>
+      p
+      {
+        font-size: 68px;
+      }
+
+      ::content #chao
+      {
+        color: red;
+      }
+    </style>
+    <div>
+      <!-- <p>Hello <strong></strong> :)</p> -->
+      <input type="text"></input>
+      <content></content> <!-- code into html tag -->
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: "selectfrom-groups",
+    });
+  </script>
+
+</dom-module>

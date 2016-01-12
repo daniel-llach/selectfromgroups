@@ -1,0 +1,27 @@
+{
+  "name": "selectgroup",
+  "authors": [
+    "daniel-llach <daniel.llach@gmail.com>"
+  ],
+  "description": "custom select typeahead with groups separation items",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "select",
+    "groups",
+    "typeahead"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.0",
+    "polymer": "~1.2.3"
+  }
+}
