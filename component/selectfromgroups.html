@@ -69,7 +69,7 @@
       }
     </style>
     <div>
-      <input type="text" id="search" placeholder="Selecciona una sala" autocomplete="off"></input>
+      <input type="text" id="search" placeholder="Selecciona una sala" autocomplete="off" value="{{filter::input}}"></input>
       <div class="options">
         <content select="optgroup"></content> <!-- code into html tag -->
       </div>
@@ -81,22 +81,32 @@
     Polymer({
       is: "selectfrom-groups",
 
-      listeners: {
-        'search.keyup': 'filterOpt'
+      properties: {
+        filter: {
+          type: String,
+          observer: 'filterOpt'
+        }
       },
+
+      filterOpt: function(){
+        this.$.val = this.$.search.value;
+        console.log(this.$.val);
+      },
+
+      // listeners: {
+      //   'search.keyup': 'filterOpt'
+      // },
 
       ready: function(){
         // var options = $(this).find('option');
         // options.css('color','red');
         console.log("content: ", Polymer.dom(parent) );
-      },
-
-      filterOpt: function(e) {
-        var inputText = this.$.search.value;
-        console.log("input: ", inputText);
       }
 
     });
   </script>
 
 </dom-module>
+<script>
+  console.log( $(window).width() );
+</script>
