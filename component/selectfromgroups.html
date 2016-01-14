@@ -1,29 +1,101 @@
 <link rel="import" href="./../bower_components/polymer/polymer.html">
+<script type="text/javascript" src="./../bower_components/jquery/dist/jquery.js"></script>
 
 <dom-module id="selectfrom-groups">
 
   <!-- Defines element markup -->
   <template>
     <style>
-      p
+      .selectfrom-groups
       {
-        font-size: 68px;
+        font-family: 'Open Sans', sans-serif;
       }
 
-      ::content .selectfrom-groups option
+      .options
       {
-        color: red;
+        width: 300px;
+        height: 250px;
+        overflow-y: auto;
+      }
+
+      ::content .selectfrom-groups input
+      {
+        text-align: left;
+        background-color: #fafbfe;
+        color: #7899af;
+        outline: none;
+        font-size: 14px;
+        border: none;
+        padding: 4px 6px;
+        box-sizing: border-box;
+      }
+
+      /* show options when input has focus */
+      ::content .selectfrom-groups input:focus~.options optgroup
+      {
+        display: block;
+      }
+
+      ::content .selectfrom-groups optgroup
+      {
+        display: none;
+        width: 300px;
+        background: #818ba3;
+        box-sizing: border-box;
+        font-weight: 300;
+        cursor: default;
+        color: #fff;
+        font-size: 11px;
+      }
+
+      ::content .selectfrom-groups optgroup option
+      {
+        color: #000;
+        font-size: 14px;
+        padding: 3px;
+      }
+
+      ::content .selectfrom-groups optgroup option:hover {
+        background: #7899ae !important;
+        color: #fff;
+      }
+
+      ::content .selectfrom-groups optgroup option:nth-child(odd) {
+        background: #eff1f6;
+      }
+
+      ::content .selectfrom-groups optgroup option:nth-child(even) {
+        background: #eaecf1;
       }
     </style>
     <div>
-      <input type="text"></input>
-      <content></content> <!-- code into html tag -->
+      <input type="text" id="search" placeholder="Selecciona una sala" autocomplete="off"></input>
+      <div class="options">
+        <content select="optgroup"></content> <!-- code into html tag -->
+      </div>
     </div>
   </template>
 
   <script>
+
     Polymer({
       is: "selectfrom-groups",
+
+      listeners: {
+        'search.keyup': 'filterOpt'
+      },
+
+      ready: function(){
+        // var options = $(this).find('option');
+        // options.css('color','red');
+        console.log("content: ", Polymer.dom(parent) );
+      },
+
+      filterOpt: function(e) {
+        var inputText = this.$.search.value;
+        console.log("input: ", inputText);
+      }
+
     });
   </script>
 

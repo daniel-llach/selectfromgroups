@@ -10,21 +10,30 @@
     <!-- Imports custom element -->
     <link rel="import" href="./component/selectfromgroups.html">
 
+    <!-- font -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
   <!-- Runs custom element -->
-  <selectfrom-groups> <!-- can have "multiple" attribute -->
-    <optgroup value="sala1">
+  <selectfrom-groups value="selectedId"> <!-- can have "multiple" attribute -->
+    <optgroup label="Disponible por horario">
       <option value="id1">id1</option>
       <option value="id2">id2</option>
       <option value="id3">id3</option>
     </optgroup>
-    <optgroup value="sala2">
+    <optgroup label="Disponible por sala">
+      <option value="id1">id1</option>
+      <option value="id2">id2</option>
+      <option value="id3">id3</option>
+    </optgroup>
+    <optgroup label="Todas las salas">
       <option value="id1">id1</option>
       <option value="id2">id2</option>
       <option value="id3">id3</option>
     </optgroup>
   </selectfrom-groups>
+
 
 </body>
 </html>
