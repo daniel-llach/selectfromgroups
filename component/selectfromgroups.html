@@ -1,21 +1,34 @@
 <link rel="import" href="./../bower_components/polymer/polymer.html">
 <script type="text/javascript" src="./../bower_components/jquery/dist/jquery.js"></script>
 
+<!-- light Dom style -->
+<style>
+  .hide
+  {
+    display: none;
+  }
+</style>
+
 <dom-module id="selectfrom-groups">
 
   <!-- Defines element markup -->
   <template>
+    <!-- shadow Dom style -->
     <style>
-      .selectfrom-groups
+      :host  /* module root */
       {
         font-family: 'Open Sans', sans-serif;
+        position: relative;
+
       }
 
-      .options
+      #options
       {
         width: 300px;
         height: 250px;
         overflow-y: auto;
+        position: absolute;
+
       }
 
       ::content .selectfrom-groups input
@@ -31,7 +44,7 @@
       }
 
       /* show options when input has focus */
-      ::content .selectfrom-groups input:focus~.options optgroup
+      ::content .selectfrom-groups input:focus~#options optgroup
       {
         display: block;
       }
@@ -67,16 +80,19 @@
       ::content .selectfrom-groups optgroup option:nth-child(even) {
         background: #eaecf1;
       }
+
     </style>
     <div>
       <input type="text" id="search" placeholder="Selecciona una sala" autocomplete="off" value="{{filter::input}}"></input>
-      <div class="options">
+      <div id="options">
         <content select="optgroup"></content> <!-- code into html tag -->
       </div>
     </div>
   </template>
 
   <script>
+    window.components = [];
+    window.components.selectfromgroups = [];
 
     Polymer({
       is: "selectfrom-groups",
@@ -88,25 +104,77 @@
         }
       },
 
-      filterOpt: function(){
-        this.$.val = this.$.search.value;
-        console.log(this.$.val);
+      clickHandler: function(event) {
+        console.log(event);
+        var element = event.target;
+        while (element) {
+         console.log(element.tagName, element.id);
+         element = element.parentElement;
+        }
       },
 
-      // listeners: {
-      //   'search.keyup': 'filterOpt'
-      // },
+      ready: function() {
 
-      ready: function(){
-        // var options = $(this).find('option');
-        // options.css('color','red');
-        console.log("content: ", Polymer.dom(parent) );
+          // menulinks[i].addEventListener('click', function(){
+          //   console.log(this.label);
+          // });
+      },
+
+      filterOpt: function(){
+
+        // define and reset temporal filter variables
+        var showFilteredItems = [];
+        var hideFilteredItems = [];
+
+        var inputText = this.$.search.value;
+        console.log(inputText);
+
+        var allOptGroup = this.getEffectiveChildren();
+        allOptGroup.forEach(function(optgroup){
+          var options = optgroup.children;
+
+          for(var i=0; i<options.length; i++){
+            var option = options[i];
+            var optionData = option.attributes['value'].value;
+
+            // if inputText is into optionData
+            if (optionData.indexOf(inputText) >= 0) {
+              showFilteredItems.push(optionData);
+            }else{
+              hideFilteredItems.push(optionData);
+            }
+          }
+        });
+        window.components.selectfromgroups.filter(hideFilteredItems, this.id);
+      },
+
+      attached: function() {
+        var optionsEvents = this.$.options.querySelectorAll('option');
+        for (var i = 0; i < optionsEvents.length; i++){
+          console.log("optionsEvents[" + i + "]: ", optionsEvents[i]);
+          optionsEvents[i].addEventListener('click', this.clickHandler);
+
+        }
+
+        this.$.options.addEventListener('click', function(e){
+          console.log("e: ", e.target);
+        });
+
       }
-
     });
+
+    // jquery for dom content children
+    window.components.selectfromgroups.filter = function(hideItems, itemId){
+
+      if(itemId){
+        // show all
+        $('#' + itemId + ' option').removeClass('hide');
+
+        hideItems.forEach(function(showItem){
+          $('#' + itemId + ' option[value="' + showItem + '"]').addClass('hide');
+        });
+      }
+    }
   </script>
 
 </dom-module>
-<script>
-  console.log( $(window).width() );
-</script>
